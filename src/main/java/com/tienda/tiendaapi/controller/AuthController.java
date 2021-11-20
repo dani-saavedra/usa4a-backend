@@ -5,6 +5,7 @@ import com.tienda.tiendaapi.dto.AutenticarResponse;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 public class AuthController {
 
     @GetMapping(path = "/saludar")
