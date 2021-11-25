@@ -15,4 +15,5 @@ public class Usuario {
     private String apellido;
     private String direccion;
     private String correoElectronico;
+    private String clave;
 }

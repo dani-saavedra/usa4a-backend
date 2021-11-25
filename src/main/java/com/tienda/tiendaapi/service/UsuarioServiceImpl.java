@@ -32,5 +32,9 @@ public class UsuarioServiceImpl implements UsuarioService {
         return userRepository.findAll();
     }
 
-
+    @Override
+    public Boolean autenticar(String usuario, String clave) {
+        List<Usuario> listUsuario = userRepository.validadarConUsuarioYClave(usuario, clave);
+        return !listUsuario.isEmpty();
+    }
 }

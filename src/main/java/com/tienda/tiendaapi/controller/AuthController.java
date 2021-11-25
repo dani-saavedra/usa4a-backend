@@ -22,10 +22,8 @@ public class AuthController {
     @PostMapping(path = "/login")
     @ResponseBody
     public AutenticarResponse autenticar(@RequestBody AutenticarDTO user) {
-        System.out.println(user);
-        if (user.getClave().equals("CLAVEDANIEL")
-                && user.getUsuario().equalsIgnoreCase("admin")) {
-            return new AutenticarResponse("mensaje");
+        if (servicio.autenticar(user.getUsuario(),user.getClave())) {
+            return new AutenticarResponse("Autenticado");
         } else {
             return new AutenticarResponse("falle");
         }

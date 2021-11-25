@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface UsuarioRepository extends MongoRepository<Usuario,String> {
 
-    @Query(value = "{cedula:?0,nombre:?1}")
-    List<Usuario> findByCedulaAndNombre(Integer cedula, String nombre);
+    @Query(value = "{correo_electronico:?:0,clave:?1}")
+    List<Usuario> validadarConUsuarioYClave(String email, String password);
 }
