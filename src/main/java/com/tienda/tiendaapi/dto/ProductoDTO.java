@@ -22,12 +22,12 @@ public class ProductoDTO implements Serializable {
     public static ProductoDTO convertDTO(Producto producto) {
         ProductoDTO productoDTO = new ProductoDTO();
         productoDTO.setCantidad(producto.getCantidad());
-        productoDTO.setCategoria(productoDTO.getCategoria());
-        productoDTO.setDescripcion(productoDTO.getDescripcion());
-        productoDTO.setMarca(productoDTO.getMarca());
-        productoDTO.setPrecio(productoDTO.getPrecio());
-        productoDTO.setReferencia(productoDTO.getReferencia());
-        productoDTO.setMateriales(productoDTO.getMateriales());
+        productoDTO.setCategoria(producto.getCategoria());
+        productoDTO.setDescripcion(producto.getDescripcion());
+        productoDTO.setMarca(producto.getMarca());
+        productoDTO.setPrecio(producto.getPrecio());
+        productoDTO.setReferencia(producto.getReferencia());
+        productoDTO.setMateriales(producto.getMateriales());
         return productoDTO;
     }
 }
