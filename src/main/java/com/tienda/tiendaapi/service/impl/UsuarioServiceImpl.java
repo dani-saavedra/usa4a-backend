@@ -1,7 +1,8 @@
-package com.tienda.tiendaapi.service;
+package com.tienda.tiendaapi.service.impl;
 
 import com.tienda.tiendaapi.modelo.Usuario;
 import com.tienda.tiendaapi.repository.UsuarioRepository;
+import com.tienda.tiendaapi.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
