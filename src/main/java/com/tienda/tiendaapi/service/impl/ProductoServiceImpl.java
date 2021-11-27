@@ -5,6 +5,9 @@ import com.tienda.tiendaapi.enums.SINOEnum;
 import com.tienda.tiendaapi.modelo.Producto;
 import com.tienda.tiendaapi.repository.ProductoRepository;
 import com.tienda.tiendaapi.service.ProductoService;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,10 +16,13 @@ import java.util.stream.Collectors;
 @Service
 public class ProductoServiceImpl implements ProductoService {
 
-    private ProductoRepository repository;
+    private final ProductoRepository repository;
+    private final MongoTemplate mongoTemplate;
 
-    public ProductoServiceImpl(ProductoRepository productoRepository) {
+    public ProductoServiceImpl(ProductoRepository productoRepository,
+                               MongoTemplate mongoTemplate) {
         this.repository = productoRepository;
+        this.mongoTemplate = mongoTemplate;
     }
 
     @Override
@@ -26,7 +32,7 @@ public class ProductoServiceImpl implements ProductoService {
         producto.setCategoria(dto.getCategoria());
         producto.setDescripcion(dto.getDescripcion());
         producto.setDisponibilidad(SINOEnum.SI.equals(dto.getDisponibilidad()));
-        producto.setMarca(dto.getMarca());
+        producto.setMarca(dto.getMarca().name());
         producto.setMateriales(dto.getMateriales());
         producto.setPrecio(dto.getPrecio());
         producto.setReferencia(dto.getReferencia());
@@ -40,5 +46,10 @@ public class ProductoServiceImpl implements ProductoService {
                 .stream()
                 .map(ProductoDTO::convertDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void eliminarProducto(String referencia) {
+        mongoTemplate.remove(Query.query(Criteria.where("referencia").is(referencia)),Producto.class);
     }
 }

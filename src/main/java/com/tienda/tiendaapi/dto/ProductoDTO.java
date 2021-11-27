@@ -1,5 +1,6 @@
 package com.tienda.tiendaapi.dto;
 
+import com.tienda.tiendaapi.enums.MarcaEnum;
 import com.tienda.tiendaapi.enums.SINOEnum;
 import com.tienda.tiendaapi.modelo.Producto;
 import lombok.Data;
@@ -10,7 +11,7 @@ import java.io.Serializable;
 public class ProductoDTO implements Serializable {
 
     private String referencia;
-    private String marca;
+    private MarcaEnum marca;
     private String materiales;
     private String categoria;
     private String descripcion;
@@ -24,7 +25,12 @@ public class ProductoDTO implements Serializable {
         productoDTO.setCantidad(producto.getCantidad());
         productoDTO.setCategoria(producto.getCategoria());
         productoDTO.setDescripcion(producto.getDescripcion());
-        productoDTO.setMarca(producto.getMarca());
+        if(producto.getDisponibilidad() != null && producto.getDisponibilidad()){
+            productoDTO.setDisponibilidad(SINOEnum.SI);
+        }else{
+            productoDTO.setDisponibilidad(SINOEnum.NO);
+        }
+        productoDTO.setMarca(MarcaEnum.valueOf(producto.getMarca()));// De string a enum
         productoDTO.setPrecio(producto.getPrecio());
         productoDTO.setReferencia(producto.getReferencia());
         productoDTO.setMateriales(producto.getMateriales());
