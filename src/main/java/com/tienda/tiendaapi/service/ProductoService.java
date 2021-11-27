@@ -11,4 +11,6 @@ public interface ProductoService {
     List<ProductoDTO> obtenerProductos();
 
     void eliminarProducto(String referencia);
+
+    void actualizarProducto(ProductoDTO dto);
 }

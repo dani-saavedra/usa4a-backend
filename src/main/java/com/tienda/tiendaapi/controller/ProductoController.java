@@ -3,7 +3,6 @@ package com.tienda.tiendaapi.controller;
 
 import com.tienda.tiendaapi.dto.GeneralResponse;
 import com.tienda.tiendaapi.dto.ProductoDTO;
-import com.tienda.tiendaapi.modelo.Producto;
 import com.tienda.tiendaapi.service.ProductoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -36,8 +35,14 @@ public class ProductoController {
     }
 
     @DeleteMapping(path = "/eliminar")
-    public GeneralResponse eliminarProducto(@RequestBody Producto producto) {
+    public GeneralResponse eliminarProducto(@RequestBody ProductoDTO producto) {
         service.eliminarProducto(producto.getReferencia());
+        return new GeneralResponse("ok");
+    }
+
+    @PutMapping(path = "/actualizar")
+    public GeneralResponse actualizarProducto(@RequestBody ProductoDTO producto) {
+        service.actualizarProducto(producto);
         return new GeneralResponse("ok");
     }
 }

@@ -50,6 +50,21 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public void eliminarProducto(String referencia) {
-        mongoTemplate.remove(Query.query(Criteria.where("referencia").is(referencia)),Producto.class);
+        mongoTemplate.remove(Query.query(Criteria.where("referencia").is(referencia)), Producto.class);
+    }
+
+    @Override
+    public void actualizarProducto(ProductoDTO dto) {
+        Criteria referencia = Criteria.where("referencia").is(dto.getReferencia());
+
+        Producto productoDB = mongoTemplate.findOne(Query.query(referencia), Producto.class);
+        if (productoDB != null) {
+            productoDB.setPrecio(dto.getPrecio());
+            productoDB.setReferencia(dto.getReferencia());
+            productoDB.setMarca(dto.getMarca().name());
+            productoDB.setCantidad(dto.getCantidad());
+            productoDB.setDisponibilidad(SINOEnum.SI.equals(dto.getDisponibilidad()));
+            repository.save(productoDB);
+        }
     }
 }
