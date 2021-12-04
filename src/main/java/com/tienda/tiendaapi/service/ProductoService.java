@@ -13,4 +13,6 @@ public interface ProductoService {
     void eliminarProducto(String referencia);
 
     void actualizarProducto(ProductoDTO dto);
+
+    ProductoDTO consultarPorReferencia(String referencia);
 }

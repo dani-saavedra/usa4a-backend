@@ -45,4 +45,11 @@ public class ProductoController {
         service.actualizarProducto(producto);
         return new GeneralResponse("ok");
     }
+
+    @GetMapping(path = "/referencia/{referencia}")
+    @ResponseBody
+    public ProductoDTO consultarPorReferencia(@PathVariable String referencia) {
+        return service.consultarPorReferencia(referencia);
+    }
+
 }

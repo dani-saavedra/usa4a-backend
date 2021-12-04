@@ -34,6 +34,7 @@ public class ProductoDTO implements Serializable {
         productoDTO.setPrecio(producto.getPrecio());
         productoDTO.setReferencia(producto.getReferencia());
         productoDTO.setMateriales(producto.getMateriales());
+        productoDTO.setUrlFotografia(producto.getUrlFotografia());
         return productoDTO;
     }
 }

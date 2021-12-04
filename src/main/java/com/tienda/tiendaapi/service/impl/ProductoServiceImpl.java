@@ -67,4 +67,11 @@ public class ProductoServiceImpl implements ProductoService {
             repository.save(productoDB);
         }
     }
+
+    @Override
+    public ProductoDTO consultarPorReferencia(String referencia) {
+        Producto producto = repository.findByReference(referencia);
+        return ProductoDTO.convertDTO(producto);
+
+    }
 }
