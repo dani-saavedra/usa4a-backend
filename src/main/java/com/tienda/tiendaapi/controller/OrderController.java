@@ -1,6 +1,7 @@
 package com.tienda.tiendaapi.controller;
 
 
+import com.tienda.tiendaapi.dto.ActualizarOrderDTO;
 import com.tienda.tiendaapi.dto.OrderDTO;
 import com.tienda.tiendaapi.modelo.Order;
 import com.tienda.tiendaapi.service.OrderService;
@@ -8,6 +9,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/order")
@@ -37,6 +40,17 @@ public class OrderController {
         } else {
             return new ResponseEntity(modeloOrder, HttpStatus.OK);
         }
+    }
+
+    @GetMapping(path = "/all")
+    public List<Order> consultarTodasOrdenes() {
+        return service.consultarTodos();
+    }
+
+    @PutMapping(path = "/update")
+    public String aprobarOrder(@RequestBody ActualizarOrderDTO dto) {
+        service.aprobarOrder(dto);
+        return"ok";
     }
 }
 

@@ -1,5 +1,6 @@
 package com.tienda.tiendaapi.modelo;
 
+import com.tienda.tiendaapi.enums.StatusOrderEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,9 +16,7 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Order {
-    public static String PENDING = "Pendiente";
-    public static String APROVED = "Aprobada";
-    public static String REJECTED = "Rechazada";
+
 
     @Id
     private String id;
@@ -25,7 +24,7 @@ public class Order {
     private Long numberOrder;
 
     private Date registerDay;
-    private String status;
+    private StatusOrderEnum status;
   //  private User salesMan;
     private Map<String, CleaningProduct> products;
     private Map<String, Integer> quantities;

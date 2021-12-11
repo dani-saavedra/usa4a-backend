@@ -1,17 +1,16 @@
 package com.tienda.tiendaapi.service.impl;
 
 
+import com.tienda.tiendaapi.dto.ActualizarOrderDTO;
 import com.tienda.tiendaapi.dto.OrderDTO;
 import com.tienda.tiendaapi.dto.ProductoDTO;
+import com.tienda.tiendaapi.enums.StatusOrderEnum;
 import com.tienda.tiendaapi.modelo.CleaningProduct;
 import com.tienda.tiendaapi.modelo.Order;
 import com.tienda.tiendaapi.repository.OrderRepository;
 import com.tienda.tiendaapi.repository.ProductoRepository;
 import com.tienda.tiendaapi.service.OrderService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -32,7 +31,7 @@ public class OrderServiceImpl implements OrderService {
         Order nuevaOrder = new Order();
 
         nuevaOrder.setRegisterDay(new Date());
-        nuevaOrder.setStatus(Order.PENDING);
+        nuevaOrder.setStatus(StatusOrderEnum.PENDIENTE);
         nuevaOrder.setNumberOrder(obtenerNumeroOrden());
 
         HashMap<String, Integer> quantities = new HashMap<>();
@@ -62,7 +61,20 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findByNumberOrder(numberOrder);
     }
 
-    public Long obtenerNumeroOrden() {
+    @Override
+    public List<Order> consultarTodos() {
+        return orderRepository.findAll();
+    }
+
+    @Override
+    public void aprobarOrder(ActualizarOrderDTO dto) {
+        Order order = orderRepository.findByNumberOrder(dto.getId());
+        order.setStatus(StatusOrderEnum.valueOf(dto.getStatus()));
+        orderRepository.save(order);
+
+    }
+
+    private Long obtenerNumeroOrden() {
         long numerberOrder = 0;
         //TODO mejorar consulta para que solo traiga el ultimo
         List<Order> orders = orderRepository.findAll();
