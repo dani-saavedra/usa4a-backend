@@ -52,4 +52,8 @@ public class ProductoController {
         return service.consultarPorReferencia(referencia);
     }
 
+
+
+
+
 }

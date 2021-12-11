@@ -2,7 +2,7 @@ package com.tienda.tiendaapi.dto;
 
 import com.tienda.tiendaapi.enums.MarcaEnum;
 import com.tienda.tiendaapi.enums.SINOEnum;
-import com.tienda.tiendaapi.modelo.Producto;
+import com.tienda.tiendaapi.modelo.CleaningProduct;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -20,21 +20,21 @@ public class ProductoDTO implements Serializable {
     private Integer cantidad;
     private String urlFotografia;
 
-    public static ProductoDTO convertDTO(Producto producto) {
+    public static ProductoDTO convertDTO(CleaningProduct cleaningProduct) {
         ProductoDTO productoDTO = new ProductoDTO();
-        productoDTO.setCantidad(producto.getCantidad());
-        productoDTO.setCategoria(producto.getCategoria());
-        productoDTO.setDescripcion(producto.getDescripcion());
-        if(producto.getDisponibilidad() != null && producto.getDisponibilidad()){
+        productoDTO.setCantidad(cleaningProduct.getCantidad());
+        productoDTO.setCategoria(cleaningProduct.getCategoria());
+        productoDTO.setDescripcion(cleaningProduct.getDescripcion());
+        if(cleaningProduct.getDisponibilidad() != null && cleaningProduct.getDisponibilidad()){
             productoDTO.setDisponibilidad(SINOEnum.SI);
         }else{
             productoDTO.setDisponibilidad(SINOEnum.NO);
         }
-        productoDTO.setMarca(MarcaEnum.valueOf(producto.getMarca()));// De string a enum
-        productoDTO.setPrecio(producto.getPrecio());
-        productoDTO.setReferencia(producto.getReferencia());
-        productoDTO.setMateriales(producto.getMateriales());
-        productoDTO.setUrlFotografia(producto.getUrlFotografia());
+        productoDTO.setMarca(MarcaEnum.valueOf(cleaningProduct.getMarca()));// De string a enum
+        productoDTO.setPrecio(cleaningProduct.getPrecio());
+        productoDTO.setReferencia(cleaningProduct.getReferencia());
+        productoDTO.setMateriales(cleaningProduct.getMateriales());
+        productoDTO.setUrlFotografia(cleaningProduct.getUrlFotografia());
         return productoDTO;
     }
 }

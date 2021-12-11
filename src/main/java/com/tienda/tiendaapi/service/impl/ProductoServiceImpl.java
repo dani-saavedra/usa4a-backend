@@ -2,7 +2,7 @@ package com.tienda.tiendaapi.service.impl;
 
 import com.tienda.tiendaapi.dto.ProductoDTO;
 import com.tienda.tiendaapi.enums.SINOEnum;
-import com.tienda.tiendaapi.modelo.Producto;
+import com.tienda.tiendaapi.modelo.CleaningProduct;
 import com.tienda.tiendaapi.repository.ProductoRepository;
 import com.tienda.tiendaapi.service.ProductoService;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -27,17 +27,17 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public void guardarNuevoProducto(ProductoDTO dto) {
-        Producto producto = new Producto();
-        producto.setCantidad(dto.getCantidad());
-        producto.setCategoria(dto.getCategoria());
-        producto.setDescripcion(dto.getDescripcion());
-        producto.setDisponibilidad(SINOEnum.SI.equals(dto.getDisponibilidad()));
-        producto.setMarca(dto.getMarca().name());
-        producto.setMateriales(dto.getMateriales());
-        producto.setPrecio(dto.getPrecio());
-        producto.setReferencia(dto.getReferencia());
-        producto.setUrlFotografia(dto.getUrlFotografia());
-        repository.save(producto);
+        CleaningProduct cleaningProduct = new CleaningProduct();
+        cleaningProduct.setCantidad(dto.getCantidad());
+        cleaningProduct.setCategoria(dto.getCategoria());
+        cleaningProduct.setDescripcion(dto.getDescripcion());
+        cleaningProduct.setDisponibilidad(SINOEnum.SI.equals(dto.getDisponibilidad()));
+        cleaningProduct.setMarca(dto.getMarca().name());
+        cleaningProduct.setMateriales(dto.getMateriales());
+        cleaningProduct.setPrecio(dto.getPrecio());
+        cleaningProduct.setReferencia(dto.getReferencia());
+        cleaningProduct.setUrlFotografia(dto.getUrlFotografia());
+        repository.save(cleaningProduct);
     }
 
     @Override
@@ -50,28 +50,28 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public void eliminarProducto(String referencia) {
-        mongoTemplate.remove(Query.query(Criteria.where("referencia").is(referencia)), Producto.class);
+        mongoTemplate.remove(Query.query(Criteria.where("referencia").is(referencia)), CleaningProduct.class);
     }
 
     @Override
     public void actualizarProducto(ProductoDTO dto) {
         Criteria referencia = Criteria.where("referencia").is(dto.getReferencia());
 
-        Producto productoDB = mongoTemplate.findOne(Query.query(referencia), Producto.class);
-        if (productoDB != null) {
-            productoDB.setPrecio(dto.getPrecio());
-            productoDB.setReferencia(dto.getReferencia());
-            productoDB.setMarca(dto.getMarca().name());
-            productoDB.setCantidad(dto.getCantidad());
-            productoDB.setDisponibilidad(SINOEnum.SI.equals(dto.getDisponibilidad()));
-            repository.save(productoDB);
+        CleaningProduct cleaningProductDB = mongoTemplate.findOne(Query.query(referencia), CleaningProduct.class);
+        if (cleaningProductDB != null) {
+            cleaningProductDB.setPrecio(dto.getPrecio());
+            cleaningProductDB.setReferencia(dto.getReferencia());
+            cleaningProductDB.setMarca(dto.getMarca().name());
+            cleaningProductDB.setCantidad(dto.getCantidad());
+            cleaningProductDB.setDisponibilidad(SINOEnum.SI.equals(dto.getDisponibilidad()));
+            repository.save(cleaningProductDB);
         }
     }
 
     @Override
     public ProductoDTO consultarPorReferencia(String referencia) {
-        Producto producto = repository.findByReference(referencia);
-        return ProductoDTO.convertDTO(producto);
+        CleaningProduct cleaningProduct = repository.findByReference(referencia);
+        return ProductoDTO.convertDTO(cleaningProduct);
 
     }
 }
