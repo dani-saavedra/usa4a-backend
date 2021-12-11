@@ -33,10 +33,12 @@ public class OrderServiceImpl implements OrderService {
 
         for (ProductoDTO product : dto.getProductos()) {
             quantities.put(product.getReferencia(), product.getCantidad());
-            CleaningProduct cleaningProduct = obtenerProductoRestandoCantidad(product);
+            CleaningProduct cleaningProduct = productoRepository.findByReference(product.getReferencia());
             if(cleaningProduct.getCantidad() < product.getCantidad()){
                 throw new IllegalArgumentException("Cantidad solicitada no disponible");
             }
+            cleaningProduct.setCantidad(cleaningProduct.getCantidad() - product.getCantidad());
+            productoRepository.save(cleaningProduct);
             cleaningProducts.put(product.getReferencia(), cleaningProduct);
             total = total + (cleaningProduct.getPrecio() * product.getCantidad());
         }
@@ -46,12 +48,5 @@ public class OrderServiceImpl implements OrderService {
         nuevaOrder.setCliente(dto.getCliente());
         orderRepository.save(nuevaOrder);
         return true;
-    }
-
-    private CleaningProduct obtenerProductoRestandoCantidad(ProductoDTO product) {
-        CleaningProduct cleaningProduct = productoRepository.findByReference(product.getReferencia());
-        cleaningProduct.setCantidad(cleaningProduct.getCantidad() - product.getCantidad());
-        productoRepository.save(cleaningProduct);
-        return cleaningProduct;
     }
 }
