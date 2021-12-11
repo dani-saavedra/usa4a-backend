@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.Map;
 
@@ -20,6 +21,9 @@ public class Order {
 
     @Id
     private String id;
+
+    private Long numberOrder;
+
     private Date registerDay;
     private String status;
   //  private User salesMan;

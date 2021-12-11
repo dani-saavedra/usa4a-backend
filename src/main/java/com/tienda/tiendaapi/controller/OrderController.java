@@ -1,10 +1,12 @@
 package com.tienda.tiendaapi.controller;
 
 
-import com.tienda.tiendaapi.dto.GeneralResponse;
 import com.tienda.tiendaapi.dto.OrderDTO;
+import com.tienda.tiendaapi.modelo.Order;
 import com.tienda.tiendaapi.service.OrderService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,12 +18,26 @@ public class OrderController {
     private final OrderService service;
 
     @PostMapping(path = "/new")
-    public GeneralResponse registrarNuevaOrden(@RequestBody OrderDTO dto) {
+    @ResponseBody
+    public ResponseEntity registrarNuevaOrden(@RequestBody OrderDTO dto) {
         try {
+
             service.registrarNuevoPedido(dto);
-            return new GeneralResponse("Pedido registrado");
+            return new ResponseEntity<>("Pedido registrado", HttpStatus.OK);
         } catch (IllegalArgumentException e) {
-            return new GeneralResponse(e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(path = "/{order}")
+    public ResponseEntity consultaOrden(@PathVariable Long order) {
+        Order modeloOrder = service.consultarPorNumeroOrder(order);
+        if (modeloOrder == null) {
+            return new ResponseEntity("", HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity(modeloOrder, HttpStatus.OK);
         }
     }
 }
+
+

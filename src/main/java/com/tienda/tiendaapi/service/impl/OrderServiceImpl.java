@@ -9,10 +9,14 @@ import com.tienda.tiendaapi.repository.OrderRepository;
 import com.tienda.tiendaapi.repository.ProductoRepository;
 import com.tienda.tiendaapi.service.OrderService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -21,12 +25,15 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final ProductoRepository productoRepository;
 
+
     @Override
     public Boolean registrarNuevoPedido(OrderDTO dto) {
         int total = 0;
         Order nuevaOrder = new Order();
+
         nuevaOrder.setRegisterDay(new Date());
         nuevaOrder.setStatus(Order.PENDING);
+        nuevaOrder.setNumberOrder(obtenerNumeroOrden());
 
         HashMap<String, Integer> quantities = new HashMap<>();
         HashMap<String, CleaningProduct> cleaningProducts = new HashMap<>();
@@ -34,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
         for (ProductoDTO product : dto.getProductos()) {
             quantities.put(product.getReferencia(), product.getCantidad());
             CleaningProduct cleaningProduct = productoRepository.findByReference(product.getReferencia());
-            if(cleaningProduct.getCantidad() < product.getCantidad()){
+            if (cleaningProduct.getCantidad() < product.getCantidad()) {
                 throw new IllegalArgumentException("Cantidad solicitada no disponible");
             }
             cleaningProduct.setCantidad(cleaningProduct.getCantidad() - product.getCantidad());
@@ -48,5 +55,22 @@ public class OrderServiceImpl implements OrderService {
         nuevaOrder.setCliente(dto.getCliente());
         orderRepository.save(nuevaOrder);
         return true;
+    }
+
+    @Override
+    public Order consultarPorNumeroOrder(Long numberOrder) {
+        return orderRepository.findByNumberOrder(numberOrder);
+    }
+
+    public Long obtenerNumeroOrden() {
+        long numerberOrder = 0;
+        //TODO mejorar consulta para que solo traiga el ultimo
+        List<Order> orders = orderRepository.findAll();
+        for (Order order: orders) {
+            if (order.getNumberOrder() > numerberOrder) {
+                numerberOrder = order.getNumberOrder() ;
+            }
+        }
+        return numerberOrder+ 1;
     }
 }
