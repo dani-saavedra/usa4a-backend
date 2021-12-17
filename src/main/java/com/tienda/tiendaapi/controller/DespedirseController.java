@@ -4,10 +4,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class SaludarController {
+public class DespedirseController {
 
     @GetMapping(path = "/despedirse")
-    public String salude(){
+    public String despedirse(){
         return "chao mundo";
     }
 }
