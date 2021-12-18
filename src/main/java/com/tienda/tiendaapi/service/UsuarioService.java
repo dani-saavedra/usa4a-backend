@@ -10,5 +10,5 @@ public interface UsuarioService {
 
     List<Usuario> obtenerUsuarios();
 
-    Boolean autenticar(String usuario, String clave);
+    List<Usuario> autenticar(String usuario, String clave);
 }

@@ -47,6 +47,16 @@ public class OrderController {
         return service.consultarTodos();
     }
 
+    @GetMapping(path = "/vendor/{vendedor}")
+    public List<Order> consultarOrdenesPorVendedor(@PathVariable String vendedor) {
+        return service.consultarOrdenesPorVendedor(vendedor);
+    }
+
+    @GetMapping(path = "/state/{estado}/{vendedor}")
+    public List<Order> consultarOrdenesPorVendedorYEstado(@PathVariable String estado,@PathVariable String vendedor) {
+        return service.consultarOrdenesPorEstadoyVendedor(estado,vendedor);
+    }
+
     @PutMapping(path = "/update")
     public String aprobarOrder(@RequestBody ActualizarOrderDTO dto) {
         service.aprobarOrder(dto);

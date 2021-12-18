@@ -3,7 +3,6 @@ package com.tienda.tiendaapi.service.impl;
 import com.tienda.tiendaapi.modelo.Usuario;
 import com.tienda.tiendaapi.repository.UsuarioRepository;
 import com.tienda.tiendaapi.service.UsuarioService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +33,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Boolean autenticar(String usuario, String clave) {
-        List<Usuario> listUsuario = userRepository.validadarConUsuarioYClave(usuario, clave);
-        return !listUsuario.isEmpty();
+    public List<Usuario> autenticar(String usuario, String clave) {
+        return userRepository.validadarConUsuarioYClave(usuario, clave);
     }
 }

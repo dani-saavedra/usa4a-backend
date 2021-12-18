@@ -67,6 +67,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> consultarOrdenesPorVendedor(String vendedor) {
+        return orderRepository.consultarOrdenesPorVendedor(vendedor);
+    }
+
+    @Override
+    public List<Order> consultarOrdenesPorEstadoyVendedor(String estado, String vendedor) {
+        return orderRepository.consultarOrdenesPorVendedorYEstado(estado,vendedor);
+    }
+
+    @Override
     public void aprobarOrder(ActualizarOrderDTO dto) {
         Order order = orderRepository.findByNumberOrder(dto.getId());
         order.setStatus(StatusOrderEnum.valueOf(dto.getStatus()));
@@ -78,11 +88,11 @@ public class OrderServiceImpl implements OrderService {
         long numerberOrder = 0;
         //TODO mejorar consulta para que solo traiga el ultimo
         List<Order> orders = orderRepository.findAll();
-        for (Order order: orders) {
+        for (Order order : orders) {
             if (order.getNumberOrder() > numerberOrder) {
-                numerberOrder = order.getNumberOrder() ;
+                numerberOrder = order.getNumberOrder();
             }
         }
-        return numerberOrder+ 1;
+        return numerberOrder + 1;
     }
 }

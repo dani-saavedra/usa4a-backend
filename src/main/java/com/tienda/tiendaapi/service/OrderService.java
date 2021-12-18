@@ -14,5 +14,9 @@ public interface OrderService {
 
     List<Order> consultarTodos();
 
+    List<Order> consultarOrdenesPorVendedor(String vendedor);
+
+    List<Order> consultarOrdenesPorEstadoyVendedor(String estado, String vendedor);
+
     void aprobarOrder(ActualizarOrderDTO dto);
 }

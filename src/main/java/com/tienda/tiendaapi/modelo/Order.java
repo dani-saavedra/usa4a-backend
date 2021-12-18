@@ -16,13 +16,9 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Order {
-
-
     @Id
     private String id;
-
     private Long numberOrder;
-
     private Date registerDay;
     private StatusOrderEnum status;
   //  private User salesMan;
@@ -30,4 +26,5 @@ public class Order {
     private Map<String, Integer> quantities;
     private Integer total;
     private String cliente;
+    private String vendedor;
 }

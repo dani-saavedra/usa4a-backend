@@ -1,5 +1,6 @@
 package com.tienda.tiendaapi.dto;
 
+import com.tienda.tiendaapi.modelo.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AutenticarResponse {
-    private String mensaje;
+    private Usuario usuario;
 }
